@@ -26,8 +26,13 @@ public class OrientacaoResource {
 	private OrientacaoRepository orientacaoRepository;
 	
 	@GetMapping
-	public Page<Orientacao> search(String descricao, Pageable pageable) {
-		return orientacaoRepository.findAll(pageable);
+	public Page<Orientacao> search(String nomeProfessor, Pageable pageable) {
+		
+		if(nomeProfessor == null || nomeProfessor.isEmpty()) {
+			return orientacaoRepository.findAll(pageable);
+		} 
+		
+		return orientacaoRepository.findByProfessorNomeProfessorContainingIgnoreCase(nomeProfessor, pageable);
 	}
 	
 	@PostMapping

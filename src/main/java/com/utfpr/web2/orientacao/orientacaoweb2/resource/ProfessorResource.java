@@ -24,11 +24,13 @@ public class ProfessorResource {
 	@Autowired
 	private ProfessorRepository professorRepository;
 	
+	// @Cacheable(value = "find-professor")
 	@GetMapping
 	public List<Professor> search() {
 		return professorRepository.findAll();
 	}
 	
+	// @CacheEvict(value = "professores", allEntries=true)
 	@PostMapping
 	public ResponseEntity<Professor> toCreate(@Valid @RequestBody Professor professor, HttpServletResponse response) {
 		Professor prof = professorRepository.save(professor);

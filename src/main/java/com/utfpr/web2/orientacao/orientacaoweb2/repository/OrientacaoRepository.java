@@ -10,4 +10,6 @@ public interface OrientacaoRepository extends JpaRepository<Orientacao, Long> {
 	
 	public Page<Orientacao> findByDescricaoOrientacao(String descricao, Pageable pageable);
 
+	public Page<Orientacao> findByProfessorNomeProfessorContainingIgnoreCase(String nomeProfessor, Pageable pageable);
+
 }
