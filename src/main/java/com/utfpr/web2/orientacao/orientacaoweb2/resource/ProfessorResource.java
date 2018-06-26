@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +26,13 @@ public class ProfessorResource {
 	@Autowired
 	private ProfessorRepository professorRepository;
 	
-	// @Cacheable(value = "find-professor")
+	@Cacheable("find-professor")
 	@GetMapping
 	public List<Professor> search() {
 		return professorRepository.findAll();
 	}
 	
-	// @CacheEvict(value = "professores", allEntries=true)
+	@CacheEvict(value="find-professor", allEntries=true)
 	@PostMapping
 	public ResponseEntity<Professor> toCreate(@Valid @RequestBody Professor professor, HttpServletResponse response) {
 		Professor prof = professorRepository.save(professor);
